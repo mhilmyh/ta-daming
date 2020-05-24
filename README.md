@@ -7,7 +7,7 @@ We make machine learning model with python from COVID-19 Italy.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install required packages.
 
 ```bash
-pip install skimage
+pip install skilearn
 pip install numpy
 pip install matplotlib
 ```
