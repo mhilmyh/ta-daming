@@ -90,4 +90,5 @@ if __name__ == "__main__":
     Simpan dataframe ke dalam file csv agar bisa
     diproses untuk langkah selanjutnya
     """
-    dataframe.to_csv('dataset/datafram.csv')
+    dataframe.to_csv('dataset/dataframe.csv')
+    print(dataframe)
