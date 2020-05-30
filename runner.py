@@ -14,4 +14,14 @@ if __name__ == '__main__':
     parameter yang dibutuhkan
     """
     sir = SIR(c.TOTAL_POPULATION, I0=c.I0, b=c.BETA, g=c.GAMMA, t=days)
+
+    """
+    Lakukan perhitungan integral
+    untuk memperoleh kurva
+    """
     sir.integrate()
+
+    """
+    Gambarkan pada plot
+    """
+    sir.plot()
