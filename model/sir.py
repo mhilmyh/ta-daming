@@ -1,29 +1,37 @@
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-"""
-SIR disease model :
-    -   dS = -b*S*I
-        Penurunan jumlah yang dialami oleh
-        Susceptible pada satuan waktu
-
-    -   dI = b*S*I - g*I
-        Kenaikan jumlah Infected pada satuan
-        dengan mengurangi jumlah yang Removed
-
-    -   dR = g*I
-        Kenaikan jumlah Removed pada tiap
-        satuan waktu
-"""
-
 
 class SIR:
     """
     Kelas yang merepresentasikan model:
-    - Susceptible
-    - Infected
-    - Recovered / Removed
+    -   Susceptible
+        Jumlah dari populasi yang belum
+        terinfeksi
+
+    -   Infected
+        Jumlah dari populasi yang sudah
+        terinfeksi
+
+    -   Recovered / Removed
+        Jumlah dari populasi yang sudah
+        sembuh dari infeksi
+
+    SIR disease formula :
+    -   dS = -b * S * I / N
+        Penurunan jumlah yang dialami oleh
+        Susceptible pada satuan waktu
+
+    -   dI = b * S * I / N - g * I
+        Kenaikan jumlah Infected pada satuan
+        dengan mengurangi jumlah yang Removed
+
+    -   dR = g * I
+        Kenaikan jumlah Removed pada tiap
+        satuan waktu
+
     """
+
     S0 = 0      # susceptible awal
     S = []      # susceptible list
     I0 = 0      # infected awal
