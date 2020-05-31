@@ -14,7 +14,7 @@ if __name__ == "__main__":
     terapia_intensiva*	            hospitalized patients in intensive care
     totale_ospedalizzati*	        total hospitalized patients (hospitalized patients with symptoms + hospitalized patients in intensive care)
     isolamento_domiciliare*	        home-confinement patients (Exposed)
-    totale_attualmente_positivi	    total amount of currently positive cases (total hospitalized patients + home-confinement patients)
+    totale_positivi	    total amount of currently positive cases (total hospitalized patients + home-confinement patients)
     nuovi_attualmente_positivi	    total amount of new positive cases (total amount of currently positive cases - total amount of positive cases of the previous day)
     dimessi_guariti	                recovered cases
     deceduti	                    death
@@ -77,7 +77,7 @@ if __name__ == "__main__":
             [isolamento_domiciliare => exposed]
             (populasi yang terjadi kontak dengan infected dan isolasi di rumah)
         -   Infected
-            [totale_attualmente_positivi => infected]
+            [totale_positivi => infected]
             (populasi yang terinfeksi)
         -   Recovered
             [dimessi_guariti => recovered]
@@ -86,6 +86,7 @@ if __name__ == "__main__":
             [deceduti => death]
             (populasi meninggal)
     """
+    dataframe['infected'] = dataframe['infected'] - dataframe['exposed']
     dataframe.to_csv('dataset/dataframe/seird.csv', index=False)
 
     """
@@ -94,12 +95,13 @@ if __name__ == "__main__":
             [Total Population - 'totale_casi' => susceptible]
             (populasi yang belum terinfeksi)
         -   Infected
-            [totale_attualmente_positivi => infected]
+            [totale_positivi => infected]
             (populasi yang terinfeksi)
         -   Removed
             [dimessi_guariti => recovered, deceduti => death]
             (populasi sembuh dan meninggal)
     """
+    dataframe['infected'] = dataframe['infected'] + dataframe['exposed']
     dataframe['removed'] = dataframe['recovered'] + dataframe['death']
     dataframe = dataframe.drop(
         columns=[
