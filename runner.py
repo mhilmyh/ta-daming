@@ -1,4 +1,4 @@
-from model import SIR
+from model.sir import SIR
 import constant as c
 import numpy as np
 
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     Model SIR dibuat dengan memberikan
     parameter yang dibutuhkan
     """
-    sir = SIR(c.TOTAL_POPULATION, I0=c.I0, b=c.BETA, g=c.GAMMA, t=days)
+    sir = SIR(S0=c.S0, I0=c.I0, b=c.BETA, g=c.GAMMA, t=days)
 
     """
     Lakukan perhitungan integral
