@@ -1,6 +1,7 @@
 from model.sir import SIR
-import constant as c
-import numpy as np
+from model.seird import SEIRD
+from numpy import linsplace
+import constant
 
 
 def simulation(which='sir'):
@@ -8,7 +9,7 @@ def simulation(which='sir'):
     Asumsi waktu pandemi yang berlangsung
     yaitu 160 hari
     """
-    days = np.linspace(0, 160, 160)
+    days = 160
 
     """
     Pilih model yang akan digunakan
@@ -16,12 +17,21 @@ def simulation(which='sir'):
     which = which.lower()
 
     if which == 'sir':
-
         """
         Model SIR dibuat dengan memberikan
-        parameter yang dibutuhkan
+        parameter yang dibutuhkan. Apabila 
+        parameter tidak disertakan maka 
+        nilai default pada class yang akan 
+        dipakai.
         """
-        sir = SIR(S0=c.S0, I0=c.I0, b=c.BETA, g=c.GAMMA, t=days)
+        sir = SIR(
+            S0=constant.S0,
+            I0=constant.I0,
+            R0=0,
+            b=constant.BETA,
+            g=constant.GAMMA,
+            t=linspace(0, days, days)
+        )
 
         """
         Lakukan perhitungan integral
@@ -30,7 +40,7 @@ def simulation(which='sir'):
         sir.integrate()
 
         """
-        Gambarkan pada plot, kurva :
+        Gambarkan pada plot, kurva:
         -   Susceptible
         -   Infected
         -   Removed/Recovered
@@ -40,9 +50,44 @@ def simulation(which='sir'):
         return sir
 
     elif which == 'seird':
+        """
+        Model SEIRD dibuat dengan memberikan
+        parameter yang dibutuhkan. Apabila 
+        parameter tidak disertakan maka 
+        nilai default pada class yang akan 
+        dipakai.
+        """
+        seird = SEIRD(
+            S0=None,
+            E0=None,
+            I0=None,
+            R0=None,
+            D0=None,
+            infectionTime=None,
+            incubationTime=None,
+            timeBeforeDeath=None,
+            time=days,
+            timestep=None,
+            funcRo=None,
+        )
 
-        print('Belum selesai')
-        return None
+        """
+        Lakukan perhitungan integral
+        untuk memperoleh kurva
+        """
+        seird.integrate()
+
+        """
+        Gambarkan pada plot, kurva:
+        -   Susceptible
+        -   Exposed
+        -   Infected
+        -   Recovered
+        -   Death
+        """
+        seird.plot()
+
+        return seird
 
     else:
         raise NotImplementedError
@@ -54,6 +99,12 @@ if __name__ == '__main__':
     dan ambil model simulasi nya
     """
     model = simulation('seird')
+
+    """
+    Jadikan model sebagai dataframe 
+    dengan nama datamodel
+    """
+    # datamodel = pandas.DataFrame()
 
     """
     Hitung akurasi model dengan data asli

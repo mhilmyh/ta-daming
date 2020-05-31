@@ -1,8 +1,9 @@
 from scipy.integrate import odeint
+from model.base import Base
 import matplotlib.pyplot as plt
 
 
-class SIR:
+class SIR(Base):
     """
     Kelas yang merepresentasikan model:
     -   Susceptible

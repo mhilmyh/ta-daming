@@ -45,6 +45,15 @@ After the data has been cleaned. We can continue to run the runner file :
 python runner.py
 ```
 
+### Model Detail
+
+There are two models that we provide :
+
+1. SIR (Susceptible, Infected, Recovered/Removed)
+2. SEIRD (Susceptible, Exposed, Infected, Recovered, Death)
+
+You can find both model file python in `./model/` directory
+
 ## Contributing
 
 This is a university project, i already have a team. Please dont ask me to make you contributor or something.
