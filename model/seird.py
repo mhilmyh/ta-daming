@@ -275,7 +275,7 @@ class SEIRD(Base):
 
         # Mendefinisikan fungsi Ro
         if funcRo is None:
-            self._funcRo = lambda x: 1.0
+            self._funcRo = lambda x: constant.RO
         elif isinstance(funcRo, (float, int)):
             self._funcRo = lambda x: funcRo
         elif callable(funcRo):
@@ -484,7 +484,7 @@ class SEIRD(Base):
                 alpha=0.5, lw=2, label='Recovered')
         ax.plot(self._time, self.D / self._totalPopulation, 'k',
                 alpha=0.5, lw=2, label='Death')
-        ax.set_xlabel('Time /days')
+        ax.set_xlabel('Time / days')
         ax.set_ylabel('Ratio (' + str(self._totalPopulation) + ' orang)')
         ax.set_ylim(0, 1.2)
         ax.yaxis.set_tick_params(length=0)
@@ -503,6 +503,9 @@ class SEIRD(Base):
             memberikan informasi semua
             parameter yang dimiliki model
         """
+        print("_"*48, end="\n\n")
+        print("\t\t{}".format("SEIRD MODEL"))
+        print("_"*48)
         print("\nS0: {} orang\nE0: {} orang\nI0: {} orang\nR0: {} orang\nD0: {} orang\n".format(
             self._S0, self._E0, self._I0, self._R0, self._D0
         ))
@@ -525,4 +528,4 @@ class SEIRD(Base):
         print("="*6, "Sebaran Probabilitas Alpha")
         print(self._pAge)
         print("="*6, "Sebaran Proporsionalitas Umur")
-        print(self._propAge)
+        print(self._propAge, end="\n\n\n")

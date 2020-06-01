@@ -117,3 +117,19 @@ class SIR(Base):
         for spine in ('top', 'right', 'bottom', 'left'):
             ax.spines[spine].set_visible(False)
         plt.show()
+
+    def debug(self):
+        print("_"*48, end="\n\n")
+        print("\t\t{}".format("SIR MODEL"))
+        print("_"*48)
+        print("\nS0: {} orang\nI0: {} orang\nR0: {} orang\n".format(
+            self.S0, self.I0, self.R0
+        ))
+        print("S: {}, ...\nI: {}, ...\nR: {}, ...\n".format(
+            ", ".join(str(element) for element in self.S[:3]),
+            ", ".join(str(element) for element in self.I[:3]),
+            ", ".join(str(element) for element in self.R[:3]),
+        ))
+        print("beta: {}\ngamma: {}\ntime: {}\npopulation: {}\n".format(
+            self.b, self.g, self.t.size, self.N
+        ))

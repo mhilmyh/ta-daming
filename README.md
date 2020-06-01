@@ -67,6 +67,15 @@ You can find both model file python in `./model/` directory
 
 This is a university project, i already have a team. Please dont ask me to make you contributor or something.
 
+## References
+
+- [https://www.statista.com/statistics/270473/age-distribution-in-italy/](https://www.statista.com/statistics/270473/age-distribution-in-italy/)
+- [https://www.statista.com/statistics/1106372/coronavirus-death-rate-by-age-group-italy/](https://www.statista.com/statistics/1106372/coronavirus-death-rate-by-age-group-italy/)
+- [https://www.worldometers.info/coronavirus/coronavirus-incubation-period/](https://www.worldometers.info/coronavirus/coronavirus-incubation-period/)
+- [https://scipython.com/book/chapter-8-scipy/additional-examples/the-sir-epidemic-model/](https://scipython.com/book/chapter-8-scipy/additional-examples/the-sir-epidemic-model/)
+- [https://towardsdatascience.com/infectious-disease-modelling-beyond-the-basic-sir-model-216369c584c4](https://towardsdatascience.com/infectious-disease-modelling-beyond-the-basic-sir-model-216369c584c4)
+- [https://en.wikipedia.org/wiki/Basic_reproduction_number](https://en.wikipedia.org/wiki/Basic_reproduction_number)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
