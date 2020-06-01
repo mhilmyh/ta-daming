@@ -10,6 +10,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install require
 pip install numpy
 pip install matplotlib
 pip install scipy
+pip install beautifulsoup4
 ```
 
 ## Usage

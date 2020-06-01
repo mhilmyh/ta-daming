@@ -1,7 +1,8 @@
 from model.sir import SIR
 from model.seird import SEIRD
-from numpy import linsplace
+from numpy import linspace
 import constant
+import pandas as pd
 
 
 def simulation(which='sir'):
@@ -104,7 +105,13 @@ if __name__ == '__main__':
     Jadikan model sebagai dataframe 
     dengan nama datamodel
     """
-    # datamodel = pandas.DataFrame()
+
+    print(model)
+
+    """
+    Impor dataframe yang sudah disimpan
+    pada folder ./dataset/dataframe/
+    """
 
     """
     Hitung akurasi model dengan data asli
