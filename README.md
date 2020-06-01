@@ -11,6 +11,7 @@ pip install numpy
 pip install matplotlib
 pip install scipy
 pip install beautifulsoup4
+pip install requests
 ```
 
 ## Usage
