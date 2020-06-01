@@ -1,6 +1,8 @@
 from scipy.integrate import odeint
 from model.base import Base
 import matplotlib.pyplot as plt
+import constant
+import numpy as np
 
 
 class SIR(Base):
@@ -44,7 +46,15 @@ class SIR(Base):
     t = None    # waktu pandemi berlangsung
     N = 0       # total populasi
 
-    def __init__(self, S0=0, I0=0, R0=0, b=0, g=0, t=None):
+    def __init__(
+        self,
+        S0=constant.S0,
+        I0=constant.I0,
+        R0=constant.R0,
+        b=constant.BETA,
+        g=constant.GAMMA,
+        t=constant.TIME
+    ):
         # Nilai awal populasi
         self.S0 = S0
         self.I0 = I0
@@ -56,7 +66,7 @@ class SIR(Base):
         self.g = g
 
         # Set nilai waktu
-        self.t = t
+        self.t = np.linspace(0, t, t)
 
     def __call__(self, S0=None, I0=None, R0=None, b=None, g=None, t=None, **kwargs):
         self.S0 = self.S0 if S0 is None else S0
@@ -66,7 +76,9 @@ class SIR(Base):
         self.b = self.b if b is None else b
         self.g = self.g if g is None else g
 
-        self.t = self.t if t is None else t
+        self.t = np.linspace(0, t, t) if t is not None else self.t
+
+        return self.S, self.I, self.R
 
     def initial(self):
         return (self.S0, self.I0, self.R0)
@@ -86,7 +98,8 @@ class SIR(Base):
         return result.T
 
     def plot(self):
-        fig = plt.figure(facecolor='w')
+        fig = plt.figure('SIR Model', facecolor='w')
+        fig.suptitle('SIR Model', fontsize=12)
         ax = fig.add_subplot(111, facecolor='#eeeeee', axisbelow=True)
         ax.plot(self.t, self.S / self.N, 'b',
                 alpha=0.5, lw=2, label='Susceptible')

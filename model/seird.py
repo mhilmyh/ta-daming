@@ -168,6 +168,48 @@ class SEIRD(Base):
     _funcRo = None
 
     """
+    -   pAge[dictionary](nilai alpha pada umur tertentu)
+
+        = > Penjelasan:
+        digunakan untuk menentukan nilai alpha
+        dalam bentuk probabilitas pada sebaran
+        umur tertentu.
+
+        = > Asumsi:
+        Suatu range umur memiliki satu nilai
+        alpha yang constant.
+    """
+    _pAge = None
+
+    """
+    -   propAge[dictionary](nilai persentase umur suatu wilayah)
+
+        = > Penjelasan:
+        digunakan untuk menentukan berapa persen 
+        jumlah penduduk yang berusia tua, muda, dll
+        dalam satuan decimal.
+
+        = > Asumsi:
+        hasil penjumlahan range umur bernilai 
+        satu atau 100% .
+    """
+    _propAge = None
+
+    """
+    -   valAlpha[float](nilai alpha)
+
+        = > Penjelasan:
+        nilai final alpha hasil dari perhitungan 
+        antara probabiliti age (pAge) dan 
+        proportional age (propAge).
+
+        = > Asumsi:
+        nilai alpha tidak lebih dari 1.0, atau
+        tidak lebih dari 100% .
+    """
+    _valAlpha = 0.0
+
+    """
     -   S,E,I,R,D[array](hasil integrasi)
 
         = > Penjelasan:
@@ -194,6 +236,8 @@ class SEIRD(Base):
         time=None,
         timestep=None,
         funcRo=None,
+        probabilityAge=None,
+        proportionAge=None,
     ):
         """
         +   Fungsi Constructor
@@ -221,10 +265,16 @@ class SEIRD(Base):
             timeBeforeDeath
         ) if timeBeforeDeath is not None else constant.TIME_BEFORE_DEATH
 
+        # menyimpan dictionari age
+        self._pAge = probabilityAge
+        self._propAge = proportionAge
+
+        # Menyetel nilai waktu pandemi
         time = time if time is not None else constant.TIME
         timestep = time if timestep is None else timestep
         self._time = linspace(0, time, timestep)
 
+        # Mendefinisikan fungsi Ro
         if funcRo is None:
             self._funcRo = lambda x: 1.0
         elif isinstance(funcRo, (float, int)):
@@ -233,6 +283,19 @@ class SEIRD(Base):
             self._funcRo = funcRo
         else:
             raise TypeError('Function Ro is in wrong type')
+
+        # Menghitung Nilai Alpha
+        value = 0.0
+        if self._pAge is not None and self._propAge is not None:
+            for age in self._pAge.keys():
+                if age in self._propAge:
+                    value += self._propAge.get(age) * self._pAge.get(age)
+                else:
+                    raise TypeError('Wrong key in age')
+
+            self._valAlpha = value
+        else:
+            self._valAlpha = constant.ALPHA
 
     def __call__(self, **kwargs):
         """
@@ -243,31 +306,31 @@ class SEIRD(Base):
             diberikan.
         """
         if kwargs.get('S0') is not None:
-            self._S0 = kwargs['S0']
+            self._S0 = int(kwargs['S0'])
 
         if kwargs.get('E0') is not None:
-            self._E0 = kwargs['E0']
+            self._E0 = int(kwargs['E0'])
 
         if kwargs.get('I0') is not None:
-            self._I0 = kwargs['I0']
+            self._I0 = int(kwargs['I0'])
 
         if kwargs.get('R0') is not None:
-            self._R0 = kwargs['R0']
+            self._R0 = int(kwargs['R0'])
 
         if kwargs.get('D0') is not None:
-            self._D0 = kwargs['D0']
+            self._D0 = int(kwargs['D0'])
 
         if kwargs.get('totalPopulation') is not None:
-            self._totalPopulation = kwargs['totalPopulation']
+            self._totalPopulation = int(kwargs['totalPopulation'])
 
         if kwargs.get('infectionTime') is not None:
-            self._infectionTime = kwargs['infectionTime']
+            self._infectionTime = int(kwargs['infectionTime'])
 
         if kwargs.get('incubationTime') is not None:
-            self._incubationTime = kwargs['incubationTime']
+            self._incubationTime = int(kwargs['incubationTime'])
 
         if kwargs.get('timeBeforeDeath') is not None:
-            self._timeBeforeDeath = kwargs['timeBeforeDeath']
+            self._timeBeforeDeath = int(kwargs['timeBeforeDeath'])
 
         if kwargs.get('time') is not None and kwargs.get('timestep') is not None:
             self._time = linspace(0, kwargs['time'], kwargs['timestep'])
@@ -279,6 +342,19 @@ class SEIRD(Base):
                 self._funcRo = kwargs['funcRo']
             else:
                 raise TypeError('Function Ro is in wrong type')
+
+        if kwargs.get('probabilityAge') is not None:
+            if kwargs.get('proportionalAge') is not None:
+                value = 0.0
+                if self._pAge is not None and self._propAge is not None:
+                    for age in self._pAge.keys():
+                        if age in self._propAge:
+                            value += self._propAge.get(age) * \
+                                self._pAge.get(age)
+
+                    self._valAlpha = value
+                else:
+                    self._valAlpha = constant.ALPHA
 
     def initial(self):
         """
@@ -324,7 +400,7 @@ class SEIRD(Base):
             terjadi setelah seseorang 
             terinfeksi.
         """
-        return 0.2
+        return self._valAlpha
 
     def gamma(self, *args):
         """
@@ -396,7 +472,8 @@ class SEIRD(Base):
             menampilkan gambar grafik 
             model SEIRD
         """
-        fig = plt.figure(facecolor='w')
+        fig = plt.figure('SEIRD Model', facecolor='w')
+        fig.suptitle('SEIRD Model', fontsize=12)
         ax = fig.add_subplot(111, facecolor='#eeeeee', axisbelow=True)
         ax.plot(self._time, self.S / self._totalPopulation, 'b',
                 alpha=0.5, lw=2, label='Susceptible')

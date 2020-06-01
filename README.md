@@ -14,6 +14,13 @@ pip install beautifulsoup4
 pip install requests
 ```
 
+Python version used :
+
+```python
+python --version
+Python 3.6.8
+```
+
 ## Usage
 
 ### Brief Summary
