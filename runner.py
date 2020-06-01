@@ -17,7 +17,9 @@ def simulation(
     a=None,
     r=None,
     R=None,
-    days=None
+    days=None,
+    probabilityAge=None,
+    proportionAge=None,
 ):
     """
     Parameter:
@@ -94,6 +96,8 @@ def simulation(
             time=days,
             timestep=constant.TIMESTEP,
             funcRo=R if R is not None else lambda x: constant.RO,
+            probabilityAge=probabilityAge if probabilityAge is not None else None,
+            proportionAge=proportionAge if proportionAge is not None else None,
         )
 
         """
@@ -120,11 +124,34 @@ def simulation(
 
 if __name__ == '__main__':
     """
+    Definisikan probabilitas suatu
+    umur dapat meninggal karena 
+    pandemi (nilai alpha)
+    """
+    probAge = {
+        '1-10': 0.01,
+        '11-90': 0.20,
+        '90-100': 0.50
+    }
+
+    """
+    Definisikan proporsi suatu
+    umur di suatu negara jika di 
+    jumlahkan harus bernilai satu
+    """
+    propAge = {
+        '1-10': 0.33,
+        '11-90': 0.33,
+        '90-100': 0.34
+    }
+
+    """
     Jalankan Simulasi Model yang dipilih
     dan ambil model simulasi nya
     """
-    sir = simulation('sir')
-    seird = simulation('seird')
+    # sir = simulation('sir')
+    seird = simulation('seird', probabilityAge=probAge, proportionAge=propAge)
+    seird.debug()
 
     """
     Jadikan model sebagai dataframe
@@ -132,33 +159,33 @@ if __name__ == '__main__':
         1.  `data_sir` untuk SIR model
         2.  `data_seird` untuk SEIRD model
     """
-    data_sir = pd.DataFrame(
-        data={
-            'Susceptible': sir.S,
-            'Infected': sir.I,
-            'Removed': sir.R,
-        }
-    )
-    data_seird = pd.DataFrame(
-        data={
-            'Susceptible': seird.S,
-            'Exposed': seird.E,
-            'Infected': seird.I,
-            'Recovered': seird.R,
-            'Death': seird.D,
-        }
-    )
+    # data_sir = pd.DataFrame(
+    #     data={
+    #         'Susceptible': sir.S,
+    #         'Infected': sir.I,
+    #         'Removed': sir.R,
+    #     }
+    # )
+    # data_seird = pd.DataFrame(
+    #     data={
+    #         'Susceptible': seird.S,
+    #         'Exposed': seird.E,
+    #         'Infected': seird.I,
+    #         'Recovered': seird.R,
+    #         'Death': seird.D,
+    #     }
+    # )
 
     """
     Impor dataframe yang sudah disimpan
     pada folder ./dataset/dataframe/
     """
-    data_real_sir = pd.read_csv('./dataset/dataframe/sir.csv')
-    data_real_seird = pd.read_csv('./dataset/dataframe/seird.csv')
+    # data_real_sir = pd.read_csv('./dataset/dataframe/sir.csv')
+    # data_real_seird = pd.read_csv('./dataset/dataframe/seird.csv')
 
     """
     Hitung akurasi model dengan data asli
     yang diambil dari folder dataset/
     """
-    result_sir = accuracy(data_sir, data_real_sir)
-    result_seird = accuracy(data_seird, data_real_seird)
+    # result_sir = accuracy(data_sir, data_real_sir)
+    # result_seird = accuracy(data_seird, data_real_seird)

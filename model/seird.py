@@ -495,3 +495,34 @@ class SEIRD(Base):
         for spine in ('top', 'right', 'bottom', 'left'):
             ax.spines[spine].set_visible(False)
         plt.show()
+
+    def debug(self):
+        """
+        +   Fungsi debug()
+            = > Kegunaan :
+            memberikan informasi semua
+            parameter yang dimiliki model
+        """
+        print("\nS0: {} orang\nE0: {} orang\nI0: {} orang\nR0: {} orang\nD0: {} orang\n".format(
+            self._S0, self._E0, self._I0, self._R0, self._D0
+        ))
+        print("S: {}, ...\nE: {}, ...\nI: {}, ...\nR: {}, ...\nD: {}, ...\n".format(
+            ", ".join(str(element) for element in self.S[:3]),
+            ", ".join(str(element) for element in self.E[:3]),
+            ", ".join(str(element) for element in self.I[:3]),
+            ", ".join(str(element) for element in self.R[:3]),
+            ", ".join(str(element) for element in self.D[:3])
+        ))
+        print("Populasi: {} orang\nMasa Infeksi: {} hari\nMasa Inkubasi: {} hari\n".format(
+            self._totalPopulation, self._infectionTime, self._incubationTime
+        ), end="")
+        print("Lama pandemi: {} hari\nLama hari sebelum meninggal: {} hari\n".format(
+            self._time.size, self._timeBeforeDeath
+        ))
+        print("Nilai Alpha: {}\nNilai Delta: {}\nNilai Gamma: {}\nNilai Rho: {}\n".format(
+            self._valAlpha, self.delta(), self.gamma(), self.rho(),
+        ))
+        print("="*6, "Sebaran Probabilitas Alpha")
+        print(self._pAge)
+        print("="*6, "Sebaran Proporsionalitas Umur")
+        print(self._propAge)
