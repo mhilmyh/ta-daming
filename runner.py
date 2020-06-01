@@ -5,6 +5,10 @@ import constant
 import pandas as pd
 
 
+def accuracy(datamodel, datareal):
+    raise NotImplementedError
+
+
 def simulation(
     which='sir',
     b=None,
@@ -13,6 +17,7 @@ def simulation(
     a=None,
     r=None,
     R=None,
+    days=None
 ):
     """
     Parameter:
@@ -29,7 +34,7 @@ def simulation(
     Asumsi waktu pandemi yang berlangsung
     yaitu 160 hari
     """
-    days = 160
+    days = days if days is not None else constant.TIME
 
     """
     Pilih model yang akan digunakan
@@ -134,7 +139,7 @@ if __name__ == '__main__':
             'Removed': sir.R,
         }
     )
-    data_sir = pd.DataFrame(
+    data_seird = pd.DataFrame(
         data={
             'Susceptible': seird.S,
             'Exposed': seird.E,
@@ -155,3 +160,5 @@ if __name__ == '__main__':
     Hitung akurasi model dengan data asli
     yang diambil dari folder dataset/
     """
+    result_sir = accuracy(data_sir, data_real_sir)
+    result_seird = accuracy(data_seird, data_real_seird)
