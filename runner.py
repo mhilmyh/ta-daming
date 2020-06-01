@@ -3,13 +3,17 @@ from model.seird import SEIRD
 import numpy as np
 import constant
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def MSE(which='sir', datamodel=None, datareal=None):
     """
     Kegunaan :
-        Berfungsi untuk menjalankan perhitungan 
-        akurasi suatu model terhadap data aslinya
+        Berfungsi untuk menjalankan perhitungan
+        Mean Square Error suatu model terhadap
+        data aslinya. Menggunakan MSE karena trend
+        yang dimiliki data berbentuk seperti
+        polinomial regresi.
     Parameter:
         - datamodel = > data dari model
         - datareal = > data asli dari hasil scrapping
@@ -43,7 +47,7 @@ def simulation(
 ):
     """
     Kegunaan :
-        Berfungsi untuk menjalankan simulasi suatu 
+        Berfungsi untuk menjalankan simulasi suatu
         model dan mengembalikan object class model
     Parameter:
         - which = > model mana yang digunakan
@@ -151,7 +155,7 @@ def simulation(
 if __name__ == '__main__':
     """
     Definisikan probabilitas suatu
-    umur dapat meninggal karena 
+    umur dapat meninggal karena
     pandemi (nilai alpha).
     """
     probAge = {
@@ -162,7 +166,7 @@ if __name__ == '__main__':
 
     """
     Definisikan proporsi suatu
-    umur di suatu negara jika di 
+    umur di suatu negara jika di
     jumlahkan harus bernilai satu
     """
     propAge = {
@@ -172,7 +176,7 @@ if __name__ == '__main__':
     }
 
     """
-    Definisikan fungsi persebaran 
+    Definisikan fungsi persebaran
     pandemi
     """
     def R(t):
@@ -229,3 +233,46 @@ if __name__ == '__main__':
     """
     MSE(which='sir', datamodel=data_sir, datareal=data_real_sir)
     MSE(which='seird', datamodel=data_seird, datareal=data_real_seird)
+
+    """
+    Plot data asli ke dalam kurva untuk
+    melihat perbandingan trend antara model
+    dengan data asli.
+    """
+    fig, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True)
+
+    # Kurva SIR
+    ax[0].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_sir['susceptible'] /
+               constant.TOTAL_POPULATION, 'b', alpha=0.5, lw=2, label='Susceptible')
+    ax[0].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_sir['infected'] /
+               constant.TOTAL_POPULATION, 'r', alpha=0.5, lw=2, label='Infected')
+    ax[0].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_sir['removed'] /
+               constant.TOTAL_POPULATION, 'g', alpha=0.5, lw=2, label='Removed')
+
+    # Kurva SEIRD
+    ax[1].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_seird['susceptible'] /
+               constant.TOTAL_POPULATION, 'b', alpha=0.5, lw=2, label='Susceptible')
+    ax[1].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_seird['exposed'] /
+               constant.TOTAL_POPULATION, 'y', alpha=0.5, lw=2, label='Exposed')
+    ax[1].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_seird['infected'] /
+               constant.TOTAL_POPULATION, 'r', alpha=0.5, lw=2, label='Infected')
+    ax[1].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_seird['recovered'] /
+               constant.TOTAL_POPULATION, 'g', alpha=0.5, lw=2, label='Recovered')
+    ax[1].plot(np.linspace(0, constant.TIME, constant.TIMESTEP), data_real_seird['death'] /
+               constant.TOTAL_POPULATION, 'k', alpha=0.5, lw=2, label='Death')
+
+    for i, axis in enumerate(ax.flat):
+        axis.set_xlabel('Time / days')
+        axis.set_ylabel(
+            'Ratio (' + str(constant.TOTAL_POPULATION) + ' orang)')
+        axis.set_ylim(0, 1.2)
+        axis.yaxis.set_tick_params(length=0)
+        axis.xaxis.set_tick_params(length=0)
+        axis.grid(b=True, which='major', c='w', lw=2, ls='-')
+        legend = axis.legend()
+        legend.get_frame().set_alpha(0.5)
+        for spine in ('top', 'right', 'bottom', 'left'):
+            axis.spines[spine].set_visible(False)
+
+    fig.tight_layout()
+    plt.show()

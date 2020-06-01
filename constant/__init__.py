@@ -18,5 +18,5 @@ INCUBATION_TIME = 7
 START_LOCKDOWN = 1
 TIME_BEFORE_DEATH = 21                  # 3 minggu
 
-TIME = 30 * 12                          # 1 tahun
+TIME = 95
 TIMESTEP = TIME

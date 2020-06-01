@@ -54,6 +54,8 @@ After the data has been cleaned. We can continue to run the runner file :
 python runner.py
 ```
 
+We can see in stdout about the details.
+
 ### Model Detail
 
 There are two models that we provide :
