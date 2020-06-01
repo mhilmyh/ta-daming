@@ -17,7 +17,6 @@ class SEIRD(Base):
             Kenaikan jumlah Exposed pada satuan waktu.
             Exposed merupakan orang yang berkontakan
             dengan infected namun tidak di rawat.
-            Asumsi yang digunakan yaitu mereka adalaj
 
         -   dI = delta * E - (1 - alpha) * gamma * I - alpha * rho * I
             Kenaikan jumlah Infected pada satuan waktu.
