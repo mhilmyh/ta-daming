@@ -8,7 +8,7 @@ TOTAL_POPULATION = 60_360_000
 
 """
 Nilai probabilitas seseorang akan 
-sembuh atau meinggal. Dapat juga berbentuk 
+sembuh atau meninggal. Dapat juga berbentuk 
 sebaran umur. Misal: 
 Umur 1-14 tahun : kemungkinan meninggal 0.2%
 Umur 15-64 tahun : kemungkinan meninggal 3.6%
