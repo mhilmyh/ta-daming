@@ -106,7 +106,7 @@ Nilai ini bisa digunakan untuk mengubah
 fungsi Ro (berapa banyak orang yang bisa 
 diinfeksi oleh orang yang terinfeksi) 
 """
-START_LOCKDOWN = 1
+START_LOCKDOWN = 60
 
 """
 Dari rata-rata, biasanya orang yang memiliki

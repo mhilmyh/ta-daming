@@ -125,7 +125,7 @@ def simulation(
             incubationTime=constant.INCUBATION_TIME,
             timeBeforeDeath=constant.TIME_BEFORE_DEATH,
             time=days,
-            timestep=constant.TIMESTEP,
+            timestep=days if days is not None else constant.TIMESTEP,
             funcRo=R if R is not None else lambda x: constant.RO,
             probabilityAge=probabilityAge if probabilityAge is not None else None,
             proportionAge=proportionAge if proportionAge is not None else None,
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     pandemi
     """
     def R(t):
-        return 4.5 / (1 + np.exp(-0.5*(-t+50))) + 0.5
+        return 10 if t < constant.START_LOCKDOWN else 3
     """
     Jalankan Simulasi Model yang dipilih
     dan ambil model simulasi nya
@@ -194,7 +194,8 @@ if __name__ == '__main__':
     seird = simulation(
         which='seird',
         probabilityAge=probAge,
-        proportionAge=propAge
+        proportionAge=propAge,
+        R=R
     )
     seird.debug()
 
