@@ -122,7 +122,7 @@ harus memiliki lama yg sama dengan banyaknya baris
 pada dataframe jika ingin melakukan plot pada 
 file `runner.py`
 """
-TIME = 95
+TIME = 99
 
 """
 Banyaknya pengambilan data pada waktu pandemi. 
