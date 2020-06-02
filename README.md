@@ -54,7 +54,7 @@ After the data has been cleaned. We can continue to run the runner file :
 python runner.py
 ```
 
-We can see in stdout about the details.
+We can see in stdout about the details. And also, remember that the value of constant.TIME must be equal to the number of row in dataframe. Unless you dont want to plot the real data result.
 
 ### Model Detail
 
