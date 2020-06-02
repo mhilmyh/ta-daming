@@ -4,6 +4,7 @@ import numpy as np
 import constant
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 
 def MSE(which='sir', datamodel=None, datareal=None):
@@ -275,4 +276,13 @@ if __name__ == '__main__':
             axis.spines[spine].set_visible(False)
 
     fig.tight_layout()
+
+    """
+    Buat folder asset untuk menaruh file file gambar
+    dari model
+    """
+    if not os.path.exists('assets/'):
+        os.mkdir('assets/')
+
+    fig.savefig('assets/model-real.png', dpi=300)
     plt.show()

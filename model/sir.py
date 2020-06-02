@@ -3,6 +3,7 @@ from model.base import Base
 import matplotlib.pyplot as plt
 import constant
 import numpy as np
+import os
 
 
 class SIR(Base):
@@ -116,6 +117,15 @@ class SIR(Base):
         legend.get_frame().set_alpha(0.5)
         for spine in ('top', 'right', 'bottom', 'left'):
             ax.spines[spine].set_visible(False)
+
+        """
+        Buat folder asset untuk menaruh file file gambar
+        dari model
+        """
+        if not os.path.exists('assets/'):
+            os.mkdir('assets/')
+
+        fig.savefig('assets/model-sir.png', dpi=300)
         plt.show()
 
     def debug(self):
