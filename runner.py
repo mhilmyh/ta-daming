@@ -5,6 +5,7 @@ import constant
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import code
 
 
 def MSE(which='sir', datamodel=None, datareal=None):
@@ -26,7 +27,8 @@ def MSE(which='sir', datamodel=None, datareal=None):
         if column == 'date':
             continue
 
-        diff = datamodel[column] - datareal[column]
+        diff = (datamodel[column] - datareal[column]) / \
+            constant.TOTAL_POPULATION
         square = diff ** 2
         mse = square.sum() / len(datareal[column])
         print("{}[{}]: {}".format(which.upper(), column.lower(), mse))
@@ -181,7 +183,7 @@ if __name__ == '__main__':
     pandemi
     """
     def R(t):
-        return 10 if t < constant.START_LOCKDOWN else 3
+        return 6 if t < constant.START_LOCKDOWN else 2
     """
     Jalankan Simulasi Model yang dipilih
     dan ambil model simulasi nya
@@ -287,3 +289,8 @@ if __name__ == '__main__':
 
     fig.savefig('assets/model-real.png', dpi=300)
     plt.show()
+
+    """
+    Masuk ke dalam mode interactive
+    """
+    code.interact(local=locals())

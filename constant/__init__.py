@@ -27,7 +27,7 @@ BETA = 0.6
 Nilai probabilitas seseorang akan 
 menjadi recovered (model SIR & SEIRD)
 """
-GAMMA = 0.1
+GAMMA = 0.5
 
 """
 Nilai probabilitas seseorang akan 
