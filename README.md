@@ -67,7 +67,7 @@ You can find both model file python in `./model/` directory
 
 ## Contributing
 
-This is a university project, i already have a team. Please dont ask me to make you contributor or something.
+No contributor needed
 
 ## References
 
